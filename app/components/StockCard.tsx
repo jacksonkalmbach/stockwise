@@ -1,3 +1,4 @@
+import Link from "./Link";
 import { Flex, Text } from "@radix-ui/themes";
 import {
   ArrowUpRightIcon,
@@ -10,7 +11,7 @@ const StockCard = () => {
       <div className="flex space-x-3">
         <div className="h-10 w-10 bg-gray-200 rounded-full"></div>
         <div className="flex flex-col">
-          <Text size="2">AAPL</Text>
+          <Link href={`/aapl`}>AAPL</Link>
           <Text className="text-xs">Apple, Inc</Text>
         </div>
       </div>

@@ -22,7 +22,12 @@ const Header = () => {
         </Flex>
 
         <div className="w-full">
-          <UserCard />
+          <UserCard
+            firstName="Jackson"
+            lastName="Kalmbach"
+            img=""
+            email="jacksonrkalmbach@gmail.com"
+          />
         </div>
       </div>
     </Flex>

@@ -15,26 +15,27 @@ import { ReactNode } from "react";
 interface Props {
   title: string;
   isSelected: boolean;
+  isHidden: boolean;
   onLinkClick: () => void;
 }
 
 const linkIconsOutlined: Record<string, ReactNode> = {
-  Dashboard: <RectangleGroupIcon className="w-6 h-6" color="#9499A5" />,
-  Market: <ChartBarIcon className="w-6 h-6" color="#9499A5" />,
-  News: <NewspaperIcon className="w-6 h-6" color="#9499A5" />,
+  Dashboard: <RectangleGroupIcon className="w-7 h-7" color="#9499A5" />,
+  Market: <ChartBarIcon className="w-7 h-7" color="#9499A5" />,
+  News: <NewspaperIcon className="w-7 h-7" color="#9499A5" />,
 };
 
 const linkIconsFilled: Record<string, ReactNode> = {
-  Dashboard: <RectangleGroupIconFilled className="w-6 h-6" color="#1B4BF1" />,
-  Market: <ChartBarIconFilled className="w-6 h-6" color="#1B4BF1" />,
-  News: <NewspaperIconFilled className="w-6 h-6" color="#1B4BF1" />,
+  Dashboard: <RectangleGroupIconFilled className="w-7 h-7" color="#1B4BF1" />,
+  Market: <ChartBarIconFilled className="w-7 h-7" color="#1B4BF1" />,
+  News: <NewspaperIconFilled className="w-7 h-7" color="#1B4BF1" />,
 };
 
-const SidebarLink = ({ title, isSelected, onLinkClick }: Props) => {
+const SidebarLink = ({ title, isSelected, isHidden, onLinkClick }: Props) => {
   return (
     <Flex
       justify="start"
-      align="start"
+      align="center"
       className={`gap-4 w-full px-4 py-2 rounded-xl ${
         isSelected ? "bg-[#F8F9FD]" : "bg-transparent"
       } hover:bg-[#F8F9FD] cursor-pointer`}
@@ -42,12 +43,12 @@ const SidebarLink = ({ title, isSelected, onLinkClick }: Props) => {
     >
       {isSelected ? linkIconsFilled[title] : linkIconsOutlined[title]}
       <Text
-        size="2"
+        size="3"
         className={`${
-          isSelected ? "text-[#1B4BF1] font-bold" : "text-[#9499A5]"
+          isSelected ? "text-[#616269] font-bold" : "text-[#9499A5]"
         }`}
       >
-        {title}
+        {!isHidden && title}
       </Text>
     </Flex>
   );
