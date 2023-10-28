@@ -4,6 +4,7 @@ import { Flex, Text, Heading } from "@radix-ui/themes";
 import { AiFillBug } from "react-icons/ai";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline";
 import SidebarLink from "./SidebarLink";
+import { useRouter } from "next/navigation";
 
 type LinkType = {
   title: string;
@@ -12,18 +13,24 @@ type LinkType = {
 
 const sidebarLinks: LinkType[] = [
   { title: "Dashboard", path: "/" },
-  { title: "Market", path: "/" },
-  { title: "News", path: "/" },
+  { title: "Market", path: "/market" },
+  { title: "News", path: "/news" },
 ];
 
 const Sidebar = () => {
+  const router = useRouter();
   const [selected, setSelected] = useState<string>("Dashboard");
   const [isHidden, setIsHidden] = useState<boolean>(false);
+
+  const handleLinkClick = (title: string, path: string) => {
+    setSelected(title);
+    router.push(path);
+  };
 
   return (
     <div
       className={`hidden ${
-        isHidden ? "" : "flex-1"
+        isHidden ? "" : "w-[200px]"
       } lg:flex h-screen transtion-x duration-200`}
     >
       <div className="flex flex-col w-full">
@@ -53,16 +60,18 @@ const Sidebar = () => {
           direction="column"
           className="flex flex-col w-full mt-8 p-5 gap-3"
         >
-          {!isHidden && <Text as="p" size="1" color="gray" className="self-start">
-            MAIN MENU
-          </Text>}
+          {!isHidden && (
+            <Text as="p" size="1" color="gray" className="self-start">
+              MAIN MENU
+            </Text>
+          )}
           {sidebarLinks.map((link: LinkType) => {
             return (
               <SidebarLink
                 key={link.title}
                 title={link.title}
                 isSelected={selected === link.title}
-                onLinkClick={() => setSelected(link.title)}
+                onLinkClick={() => handleLinkClick(link.title, link.path)}
                 isHidden={isHidden}
               />
             );

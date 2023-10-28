@@ -11,7 +11,7 @@ const StockCardsPreview = ({ text }: Props) => {
   return (
     <>
       <Flex justify="between" align="center" className="w-full">
-        <Heading>{text}</Heading>
+        <Heading size="3">{text}</Heading>
         <EllipsisHorizontalIcon className="h-10 w-10" color="#CCCC" />
       </Flex>
       <div className="w-full flex gap-3 overflow-auto">

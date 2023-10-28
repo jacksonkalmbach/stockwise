@@ -10,7 +10,7 @@ interface Props {
 
 const UserCard = ({ firstName, lastName, email, img }: Props) => {
   return (
-    <Card style={{ maxWidth: 350, border: "transparent" }}>
+    <Card style={{ maxWidth: 350 }} variant="ghost">
       <Flex gap="3" align="center">
         <Avatar size="3" src="" radius="full" fallback={firstName[0]} />
         <Box>

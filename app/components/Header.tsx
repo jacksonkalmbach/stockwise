@@ -3,24 +3,17 @@ import SearchBar from "./SearchBar";
 import { StarIcon, BellIcon } from "@heroicons/react/24/outline";
 import { Flex } from "@radix-ui/themes";
 import UserCard from "./UserCard";
+import Dropdown from "./Dropdown";
 
 const Header = () => {
   return (
-    <Flex
-      justify="between"
-      className="h-20 items-center justify-between px-5 w-full"
-    >
-      <div className="max-w-lg px-5">
+    <Flex justify="between" align="center" className="h-20 px-10 w-full">
+      <div className="w-1/3">
         <SearchBar placeholder="Search" />
       </div>
       <div className="flex space-x-3 items-center">
-        <Flex className="items-center justify-center bg-[#f8f9fd] rounded-full p-2">
-          <StarIcon className="h-6 w-6 text-black" />
-        </Flex>
-        <Flex className="items-center justify-center bg-[#f8f9fd] rounded-full p-2">
-          <BellIcon className="h-6 w-6 text-black" />
-        </Flex>
-
+        <Dropdown />
+        <Dropdown />
         <div className="w-full">
           <UserCard
             firstName="Jackson"

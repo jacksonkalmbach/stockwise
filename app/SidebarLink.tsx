@@ -45,7 +45,7 @@ const SidebarLink = ({ title, isSelected, isHidden, onLinkClick }: Props) => {
       <Text
         size="3"
         className={`${
-          isSelected ? "text-[#616269] font-bold" : "text-[#9499A5]"
+          isSelected ? "text-[#1B4BF1] font-bold" : "text-[#9499A5]"
         }`}
       >
         {!isHidden && title}
