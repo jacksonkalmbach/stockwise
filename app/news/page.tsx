@@ -1,5 +1,6 @@
 import { Flex, Heading, Text, Grid } from "@radix-ui/themes";
 import ArticlePreview from "./_components/ArticlePreview";
+import SelectComponent from "../components/SelectComponent";
 
 const NewsPage = () => {
   return (
@@ -13,9 +14,10 @@ const NewsPage = () => {
         gap="4"
         className="bg-white rounded-xl col-span-2 p-4 overflow-hidden"
       >
-        <div className="px-4 pt-4">
+        <Flex justify="between" className="px-4 pt-4">
           <Heading>Latest Financial and Business News</Heading>
-        </div>
+          <SelectComponent />
+        </Flex>
         <Flex direction="column" className="overflow-auto">
           <ArticlePreview />
           <ArticlePreview />
