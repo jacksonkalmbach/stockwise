@@ -12,7 +12,7 @@ import StockNameCard from "../StockNameCard";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "176122d198msh9e3d591dfc3f356p1c6bb1jsnd7655b1a95f2",
+    "X-RapidAPI-Key": "",
     "X-RapidAPI-Host": "ms-finance.p.rapidapi.com",
   },
 };
