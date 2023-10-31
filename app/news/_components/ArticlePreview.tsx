@@ -1,29 +1,71 @@
 import { Flex, Heading, Text } from "@radix-ui/themes";
+import Link from "@/app/components/Link";
+import Image from "next/image";
 
-const ArticlePreview = () => {
+interface Props {
+  article: {
+    authorFormatted: string;
+    description: string;
+    shorterHeadline: string;
+    url: string;
+    shortDateLastPublished: string;
+    promoImage: {
+      url: string;
+    };
+  };
+}
+
+const ArticlePreview = ({ article }: Props) => {
+  const {
+    authorFormatted,
+    description,
+    url,
+    shortDateLastPublished,
+    shorterHeadline,
+    promoImage,
+  } = article;
+
+  const capitalizeAuthorName = (name: string) => {
+    const namesArray = name.split(" ");
+    const capitalizedNamesArray = namesArray.map(
+      (name) => name.charAt(0).toUpperCase() + name.slice(1)
+    );
+    return capitalizedNamesArray.join(" ");
+  };
+
+  const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.open(url, "_blank");
+  };
+
   return (
-    <Flex
-      direction="column"
-      className="hover:bg-[#f8f9fd] cursor-pointer rounded-xl p-3"
-    >
-      <Flex gap="2" align="end" className="mb-2">
-        <Heading size="5">Title of the Article</Heading>
-        <Text size="1" color="blue" weight="bold">
-          Category
-        </Text>
-        <Text size="1">Source</Text>
-        <Text size="1">DatePosted</Text>
+    <a href={url} target="_blank" onClick={handleLinkClick}>
+      <Flex
+        gap="3"
+        className="hover:bg-[#f8f9fd] cursor-pointer rounded-xl p-3"
+      >
+        <div className="w-48 h-32 overflow-hidden rounded-xl">
+          <img
+            src={promoImage?.url}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+            alt="article-media"
+          />
+        </div>
+        <Flex direction="column" gap="2" align="start" className="mb-2">
+          <Heading size="5">{shorterHeadline}</Heading>
+          <Flex gap="2">
+            <Text size="1">{capitalizeAuthorName(authorFormatted)}</Text>
+            <Text size="1">•</Text>
+            <Text size="1">{shortDateLastPublished}</Text>
+          </Flex>
+          <Text size="2">{description}</Text>
+        </Flex>
       </Flex>
-      <Text size="2">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </Text>
-    </Flex>
+    </a>
   );
 };
 

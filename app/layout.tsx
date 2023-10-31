@@ -6,10 +6,16 @@ import { Theme } from "@radix-ui/themes";
 import { Inter } from "next/font/google";
 import Sidebar from "./Sidebar";
 import { Header } from "./components";
+import localFont from "next/font/local";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const satoshi = localFont({
+  src: [
+    {
+      path: "../fonts/Satoshi/Satoshi-Black.otf",
+      weight: "400",
+    },
+  ],
+  variable: "--font-satoshi",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.variable}>
+      <body className={`${satoshi.variable} font-sans`}>
         <Theme>
           <div className="flex">
             <Sidebar />
