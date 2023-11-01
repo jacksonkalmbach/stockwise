@@ -4,11 +4,13 @@ import {
   RectangleGroupIcon,
   ChartBarIcon,
   NewspaperIcon,
+  ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import {
   RectangleGroupIcon as RectangleGroupIconFilled,
   ChartBarIcon as ChartBarIconFilled,
   NewspaperIcon as NewspaperIconFilled,
+  ArrowTrendingUpIcon as ArrowTrendingUpIconFilled,
 } from "@heroicons/react/24/solid";
 import { ReactNode } from "react";
 
@@ -20,14 +22,15 @@ interface Props {
 
 const linkIconsOutlined: Record<string, ReactNode> = {
   Dashboard: <RectangleGroupIcon className="w-7 h-7" color="#9499A5" />,
-  Market: <ChartBarIcon className="w-7 h-7" color="#9499A5" />,
+  Markets: <ChartBarIcon className="w-7 h-7" color="#9499A5" />,
   News: <NewspaperIcon className="w-7 h-7" color="#9499A5" />,
+  Portfolio: <ArrowTrendingUpIcon className="w-7 h-7" color="#9499A5" />,
 };
 
 const linkIconsFilled: Record<string, ReactNode> = {
   Dashboard: <RectangleGroupIconFilled className="w-7 h-7" color="#1B4BF1" />,
-  Market: <ChartBarIconFilled className="w-7 h-7" color="#1B4BF1" />,
-  News: <NewspaperIconFilled className="w-7 h-7" color="#1B4BF1" />,
+  Markets: <ChartBarIconFilled className="w-7 h-7" color="#1B4BF1" />,
+  Portfolio: <ArrowTrendingUpIconFilled className="w-7 h-7" color="#1B4BF1" />,
 };
 
 const SidebarLink = ({ title, isSelected, onLinkClick }: Props) => {

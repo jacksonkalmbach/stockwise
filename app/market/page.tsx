@@ -37,7 +37,7 @@ const MarketPage = () => {
         <Flex
           direction="column"
           gap="4"
-          className="col-span-2 bg-white p-4 rounded-xl"
+          className="col-span-2 bg-white p-4 rounded-xl overflow-auto"
         >
           <MarketSummary />
           <Text size="4" weight="bold">

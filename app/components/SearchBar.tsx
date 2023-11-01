@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 const SearchBar = ({ placeholder }: { placeholder: string }) => {
   return (
-    <TextField.Root radius="large">
+    <TextField.Root radius="large" className="absolute">
       <TextField.Slot>
         <MagnifyingGlassIcon height="16" width="16" />
       </TextField.Slot>

@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useState } from "react";
 import { Flex, Text, Grid, Badge } from "@radix-ui/themes";
 import MarketPreview from "./MarketPreview";
+import MarketPreviewLoading from "./MarketPreviewLoading";
 
 const url = "https://ms-finance.p.rapidapi.com/market/get-summary";
 const options = {
@@ -29,6 +30,7 @@ const marketReducer = (state: any, action: any) => {
 };
 
 const MarketSummary = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedMarket, setSelectedMarket] = useState<string>("US");
   const [marketData, dispatch] = useReducer(marketReducer, {
     usMarkets: null,
@@ -39,6 +41,7 @@ const MarketSummary = () => {
 
   useEffect(() => {
     const fetchMarketData = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(url, options);
         const result = await response.json();
@@ -52,6 +55,7 @@ const MarketSummary = () => {
             canMarkets: result.MarketRegions.CAN,
           },
         });
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -94,8 +98,10 @@ const MarketSummary = () => {
         })}
       </Flex>
       <Grid gap="3" columns="4">
-        {selectedMarketData &&
-          selectedMarketData.map((index: any) => (
+        {isLoading ? (
+          <MarketPreviewLoading />
+        ) : (
+          selectedMarketData && selectedMarketData.map((index: any) => (
             <MarketPreview
               key={index.PerformanceId}
               performanceId={index.PerformanceId}
@@ -104,7 +110,8 @@ const MarketSummary = () => {
               price={index.Price}
               percentChange={index.PercentChange}
             />
-          ))}
+          ))
+        )}
       </Grid>
     </Flex>
   );

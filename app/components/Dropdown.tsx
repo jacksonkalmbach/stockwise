@@ -1,6 +1,5 @@
 "use client";
-import { Text, Flex } from "@radix-ui/themes";
-import { DropdownMenu, Button } from "@radix-ui/themes";
+import { Text, Flex, Avatar, DropdownMenu, Box } from "@radix-ui/themes";
 import { StarIcon } from "@heroicons/react/24/outline";
 import Link from "./Link";
 
@@ -8,9 +7,15 @@ const Dropdown = () => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button variant="soft" radius="full">
-          <StarIcon className="w-6 h-6" />
-        </Button>
+        <Avatar
+          variant="soft"
+          radius="full"
+          fallback={
+            <Box>
+              <StarIcon className="w-6 h-6" />
+            </Box>
+          }
+        ></Avatar>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[250px]">
         <DropdownMenu.Item>

@@ -4,6 +4,7 @@ import {
   ArrowSmallDownIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import MarketPreviewLoading from "./MarketPreviewLoading";
 
 interface Props {
   name: string;
@@ -21,6 +22,9 @@ const MarketPreview = ({
   percentChange,
 }: Props) => {
   const router = useRouter();
+
+  if (name === undefined) return <MarketPreviewLoading />;
+
   return (
     <Flex
       key={performanceId}
