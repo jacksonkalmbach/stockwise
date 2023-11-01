@@ -9,15 +9,15 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between h-20 px-4 w-screen md:px-10 lg:w-full relative">
       <div className="flex align-center items-center gap-3">
-        <Bars3Icon color="gray" className="w-8 h-8 cursor-pointer" />
+        <div className="cursor-pointer rounded-full p-2 hover:bg-gray-200">
+          <Bars3Icon color="black" className="w-8 h-8" />
+        </div>
         <h1 className="text-xl font-bold">STOCKWISE</h1>
       </div>
-      <div className="block md:hidden">
+      <div className="block md:hidden ">
         <MagnifyingGlassIcon className="w-8 h-8" color="gray" />
       </div>
       <div className="hidden md:flex space-x-3 items-center">
-        <Dropdown />
-        <Dropdown />
         <div className="w-full">
           <UserCard
             firstName="Jackson"

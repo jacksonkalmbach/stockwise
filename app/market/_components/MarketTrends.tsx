@@ -1,8 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Select, Table, Text, Flex, Badge } from "@radix-ui/themes";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowSmallUpIcon,
+  ArrowSmallDownIcon,
+  PlusCircleIcon,
+} from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import AddToWatchlist from "./AddToWatchlist";
 
 const url = "https://ms-finance.p.rapidapi.com/market/v2/get-movers";
 const options = {
@@ -11,6 +16,15 @@ const options = {
     "X-RapidAPI-Key": process.env.NEXT_PUBLIC_FINANCE_API_KEY!,
     "X-RapidAPI-Host": process.env.NEXT_PUBLIC_FINANCE_API_URL!,
   },
+};
+
+const trendDescription: Record<string, string> = {
+  "Most active":
+    "The stocks or funds with the highest trading volume (in shares) during the current trading session",
+  Gainers:
+    "The top gaining stocks or funds (by percent change) during the current trading session",
+  Losers:
+    "The top losing stocks or funds (by percent change) during the current trading session",
 };
 
 const MarketTrends = ({ selectedTrend }: { selectedTrend: string }) => {
@@ -32,6 +46,7 @@ const MarketTrends = ({ selectedTrend }: { selectedTrend: string }) => {
         setGainers(result.gainers);
         setActives(result.actives);
         setLosers(result.losers);
+        console.log(result);
       } catch (error) {
         console.error(error);
       }
@@ -48,12 +63,16 @@ const MarketTrends = ({ selectedTrend }: { selectedTrend: string }) => {
 
   return (
     <Flex direction="column" className="w-full">
-      <Table.Root className="overflow-auto">
+      <Text size="4">{selectedTrend}</Text>
+      <Text size="1" weight="light">
+        {trendDescription[selectedTrend]}
+      </Text>
+      <Table.Root className="overflow-auto mt-3">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Symbol</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Company</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>Last Price</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Change</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>$ Change</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>% Change</Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
@@ -63,6 +82,7 @@ const MarketTrends = ({ selectedTrend }: { selectedTrend: string }) => {
             selectedTrendData.map((stock: any) => {
               const {
                 performanceID,
+                name,
                 ticker,
                 lastPrice,
                 netChange,
@@ -78,27 +98,31 @@ const MarketTrends = ({ selectedTrend }: { selectedTrend: string }) => {
                     onClick={() => handleClick(performanceID)}
                   >
                     <a href={`/${performanceID}`}>
-                      <Text weight="bold" color="blue">
-                        {ticker}
-                      </Text>
+                      <Flex gap="2">
+                        <Badge variant="surface" color="gray">
+                          {ticker}
+                        </Badge>
+                        <p className="hidden md:block font-bold">{name}</p>
+                      </Flex>
                     </a>
                   </Table.RowHeaderCell>
                   <Table.Cell>{lastPrice.toFixed(2)}</Table.Cell>
                   <Table.Cell>
                     <Text color={netChange > 0 ? "green" : "red"}>
-                      {netChange.toFixed(2)}
+                      ${netChange.toFixed(2)}
                     </Text>
                   </Table.Cell>
                   <Table.Cell>
                     <Flex justify="between" align="center">
                       <Badge color={percentNetChange > 0 ? "green" : "red"}>
-                        {percentNetChange.toFixed(2)}
+                        {percentNetChange > 0 ? (
+                          <ArrowSmallUpIcon className="w-4 h-4" />
+                        ) : (
+                          <ArrowSmallDownIcon className="w-4 h-4" />
+                        )}
+                        {percentNetChange.toFixed(2)}%
                       </Badge>
-                      <PlusCircleIcon
-                        className="w-5 h-5 cursor-pointer z-30"
-                        color="gray"
-                        onClick={() => console.log("click plus")}
-                      />
+                      <AddToWatchlist />
                     </Flex>
                   </Table.Cell>
                 </Table.Row>

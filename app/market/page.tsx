@@ -24,10 +24,10 @@ const options = {
 };
 
 const marketTrends: { title: string; icon: ReactNode }[] = [
-  {
-    title: "Market indexes",
-    icon: <ChartBarIcon color="blue" className="W-4 h-4" />,
-  },
+  // {
+  //   title: "Market indexes",
+  //   icon: <ChartBarIcon color="blue" className="W-4 h-4" />,
+  // },
   {
     title: "Most active",
     icon: <FireIcon color="orange" className="W-4 h-4" />,
