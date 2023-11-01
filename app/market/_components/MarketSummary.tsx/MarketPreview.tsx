@@ -33,7 +33,7 @@ const MarketPreview = ({
       className="border rounded-xl p-2"
       onClick={() => router.push(`/${performanceId}`)}
     >
-      <Flex gap="2">
+      <Flex gap="2" justify="center" align="center">
         <Avatar
           fallback={
             <Box>

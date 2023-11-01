@@ -1,14 +1,27 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import {
   ChartBarIcon,
   FireIcon,
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
 } from "@heroicons/react/24/solid";
-import { Badge, Flex, Grid, Table, Text } from "@radix-ui/themes";
+import { Badge, Flex, Text } from "@radix-ui/themes";
 import MarketSummary from "./_components/MarketSummary.tsx/MarketSummary";
 import Movers from "./_components/Movers";
+import MarketNews from "./_components/MarketNews";
+
+const url =
+  "https://cnbc.p.rapidapi.com/news/v2/list-special-reports?pageSize=8&page=1";
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_NEWS_API_KEY!,
+    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_NEWS_API_URL!,
+  },
+};
 
 const marketTrends: { title: string; icon: ReactNode }[] = [
   {
@@ -16,7 +29,7 @@ const marketTrends: { title: string; icon: ReactNode }[] = [
     icon: <ChartBarIcon color="blue" className="W-4 h-4" />,
   },
   {
-    title: "Trending",
+    title: "Most active",
     icon: <FireIcon color="orange" className="W-4 h-4" />,
   },
   {
@@ -30,16 +43,37 @@ const marketTrends: { title: string; icon: ReactNode }[] = [
 ];
 
 const MarketPage = () => {
-  const [selectedTrend, setSelectedTrend] = useState<string>("Active");
+  const [selectedTrend, setSelectedTrend] = useState<string>("Most active");
+  const [showNews, setShowNews] = useState<boolean>(false);
+
+  const [articles, setArticles] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        try {
+          const response = await fetch(url, options);
+          const result = await response.json();
+          console.log(result);
+          setArticles(result.data.specialReportsEntries.results);
+        } catch (error) {
+          console.error(error);
+        }
+      } catch (error) {}
+    };
+    fetchNews();
+  }, []);
   return (
-    <div className="flex-grow flex-1 w-screen h-full bg-[#f8f9fd] p-3 md:p-8 overflow-auto md:w-full">
-      <Grid columns="1" gap="4">
+    <div className="flex-grow flex-1 w-screen h-full bg-[#f8f9fd] p-3 md:py-8 md:px-24 overflow-auto md:w-full">
+      <div className="hidden md:block mb-6 ">
+        <MarketSummary />
+      </div>
+      <div className="md:grid grid-cols-3 gap-6">
         <Flex
           direction="column"
           gap="4"
-          className="col-span-2 bg-white p-4 rounded-xl overflow-auto"
+          className="col-span-2 p-6 rounded-xl overflow-auto bg-white"
         >
-          <MarketSummary />
           <Text size="4" weight="bold">
             Explore Market Trends
           </Text>
@@ -61,10 +95,26 @@ const MarketPage = () => {
               );
             })}
           </Flex>
+          <div className="w-full flex justify-between items-center py-3 rounded md:hidden">
+            <Text size="5">In the news</Text>
+            <div
+              className={`${
+                showNews ? "rotate-180" : ""
+              } transition-all duration-200`}
+              onClick={() => setShowNews(!showNews)}
+            >
+              <ChevronDownIcon className="w-5 h-5" />
+            </div>
+          </div>
+          <div className={`${showNews ? "" : "h-0"}`}>
+            <MarketNews articles={articles} show={showNews} />
+          </div>
           <Movers />
         </Flex>
-        <Flex className="col-span-1 bg-white rounded-xl"></Flex>
-      </Grid>
+        <div className="hidden md:flex flex-col md:col-span-1 bg-white rounded-xl p-6">
+          <MarketNews articles={articles} show />
+        </div>
+      </div>
     </div>
   );
 };

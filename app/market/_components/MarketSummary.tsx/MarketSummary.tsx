@@ -80,9 +80,9 @@ const MarketSummary = () => {
   };
 
   return (
-    <Flex direction="column" gap="2" className="bg-white rounded-xl">
+    <Flex direction="column" gap="2" className="bg-white rounded-xl p-4">
       <Flex gap="2">
-        <Text weight="bold">Markets: </Text>
+        <Text size="2">MARKETS: </Text>
         {markets.map((market: { key: string; title: string }) => {
           return (
             <Badge
@@ -101,7 +101,8 @@ const MarketSummary = () => {
         {isLoading ? (
           <MarketPreviewLoading />
         ) : (
-          selectedMarketData && selectedMarketData.map((index: any) => (
+          selectedMarketData &&
+          selectedMarketData.map((index: any) => (
             <MarketPreview
               key={index.PerformanceId}
               performanceId={index.PerformanceId}

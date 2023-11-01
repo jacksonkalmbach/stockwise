@@ -29,7 +29,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="fixed w-[300px] left-0 bg-white h-screen z-50 shadow-lg transition-all duration-500">
+    <div className="hidden fixed w-[300px] left-0 bg-white h-screen z-50 shadow-lg transition-all duration-500">
       <div className="flex flex-col w-full h-full">
         <div className="h-20 px-5">
           <Flex
