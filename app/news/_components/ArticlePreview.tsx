@@ -1,6 +1,5 @@
 import { Flex, Heading, Text } from "@radix-ui/themes";
-import Link from "@/app/components/Link";
-import Image from "next/image";
+
 
 interface Props {
   article: {

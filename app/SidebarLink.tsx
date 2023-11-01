@@ -15,7 +15,6 @@ import { ReactNode } from "react";
 interface Props {
   title: string;
   isSelected: boolean;
-  isHidden: boolean;
   onLinkClick: () => void;
 }
 
@@ -31,7 +30,7 @@ const linkIconsFilled: Record<string, ReactNode> = {
   News: <NewspaperIconFilled className="w-7 h-7" color="#1B4BF1" />,
 };
 
-const SidebarLink = ({ title, isSelected, isHidden, onLinkClick }: Props) => {
+const SidebarLink = ({ title, isSelected, onLinkClick }: Props) => {
   return (
     <Flex
       justify="start"
@@ -50,7 +49,7 @@ const SidebarLink = ({ title, isSelected, isHidden, onLinkClick }: Props) => {
             : "text-[#9499A5]"
         }`}
       >
-        {!isHidden && title}
+        {title}
       </Text>
     </Flex>
   );

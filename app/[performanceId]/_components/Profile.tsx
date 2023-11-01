@@ -5,8 +5,8 @@ import Link from "@/app/components/Link";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "",
-    "X-RapidAPI-Host": "ms-finance.p.rapidapi.com",
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_FINANCE_API_KEY!,
+    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_FINANCE_API_URL!,
   },
 };
 

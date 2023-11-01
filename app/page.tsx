@@ -3,6 +3,9 @@ import StockCard from "./components/StockCard";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import StockCardsPreview from "./components/StockCardsPreview";
 
+const financeApiKey = process.env.FINANCE_API_KEY;
+console.log(financeApiKey);
+
 export default function Home() {
   return (
     <div className="flex-grow flex-1 w-full h-full bg-[#f8f9fd] p-8">

@@ -7,8 +7,8 @@ import SelectComponent from "../components/SelectComponent";
 const options: any = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": process.env.NEWS_API_KEY,
-    "X-RapidAPI-Host": process.env.NEWS_API_HOST,
+    "X-RapidAPI-Key": process.env.NEWS_API_KEY!,
+    "X-RapidAPI-Host": process.env.NEWS_API_HOST!,
   },
 };
 

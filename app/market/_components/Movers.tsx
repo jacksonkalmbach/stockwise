@@ -8,8 +8,8 @@ const url = "https://ms-finance.p.rapidapi.com/market/v2/get-movers";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "",
-    "X-RapidAPI-Host": "ms-finance.p.rapidapi.com",
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_FINANCE_API_KEY!,
+    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_FINANCE_API_URL!,
   },
 };
 
@@ -52,48 +52,51 @@ const Movers = () => {
         </Table.Header>
 
         <Table.Body>
-          {gainers.map((stock: any) => {
-            const {
-              performanceID,
-              ticker,
-              lastPrice,
-              netChange,
-              percentNetChange,
-            } = stock;
-            
-            return (
-              <Table.Row
-                key={performanceID}
-                className="hover:bg-gray-100 cursor-pointer"
-              >
-                <Table.RowHeaderCell onClick={() => handleClick(performanceID)}>
-                  <a href={`/${performanceID}`}>
-                    <Text weight="bold" color="blue">
-                      {ticker}
+          {gainers &&
+            gainers.map((stock: any) => {
+              const {
+                performanceID,
+                ticker,
+                lastPrice,
+                netChange,
+                percentNetChange,
+              } = stock;
+
+              return (
+                <Table.Row
+                  key={performanceID}
+                  className="hover:bg-gray-100 cursor-pointer"
+                >
+                  <Table.RowHeaderCell
+                    onClick={() => handleClick(performanceID)}
+                  >
+                    <a href={`/${performanceID}`}>
+                      <Text weight="bold" color="blue">
+                        {ticker}
+                      </Text>
+                    </a>
+                  </Table.RowHeaderCell>
+                  <Table.Cell>{lastPrice.toFixed(2)}</Table.Cell>
+                  <Table.Cell>
+                    <Text color={netChange > 0 ? "green" : "red"}>
+                      {netChange.toFixed(2)}
                     </Text>
-                  </a>
-                </Table.RowHeaderCell>
-                <Table.Cell>{lastPrice.toFixed(2)}</Table.Cell>
-                <Table.Cell>
-                  <Text color={netChange > 0 ? "green" : "red"}>
-                    {netChange.toFixed(2)}
-                  </Text>
-                </Table.Cell>
-                <Table.Cell>
-                  <Flex justify="between" align="center">
-                    <Badge color={percentNetChange > 0 ? "green" : "red"}>
-                      {percentNetChange.toFixed(2)}
-                    </Badge>
-                    <PlusCircleIcon
-                      className="w-5 h-5 cursor-pointer z-30"
-                      color="gray"
-                      onClick={() => console.log("click plus")}
-                    />
-                  </Flex>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Flex justify="between" align="center">
+                      <Badge color={percentNetChange > 0 ? "green" : "red"}>
+                        {percentNetChange.toFixed(2)}
+                      </Badge>
+                      <PlusCircleIcon
+                        className="w-5 h-5 cursor-pointer z-30"
+                        color="gray"
+                        onClick={() => console.log("click plus")}
+                      />
+                    </Flex>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
         </Table.Body>
       </Table.Root>
     </Flex>

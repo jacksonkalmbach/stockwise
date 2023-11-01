@@ -1,69 +1,110 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { Flex, Text, Grid } from "@radix-ui/themes";
+import React, { useReducer, useEffect, useState } from "react";
+import { Flex, Text, Grid, Badge } from "@radix-ui/themes";
+import MarketPreview from "./MarketPreview";
 
 const url = "https://ms-finance.p.rapidapi.com/market/get-summary";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "",
-    "X-RapidAPI-Host": "ms-finance.p.rapidapi.com",
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_FINANCE_API_KEY!,
+    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_FINANCE_API_URL!,
   },
 };
 
+const SET_MARKETS = "SET_MARKETS";
+const markets = [
+  { key: "USA", title: "US" },
+  { key: "Europe", title: "Europe" },
+  { key: "Asia", title: "Asia" },
+  { key: "CAN", title: "Canada" },
+];
+
+const marketReducer = (state: any, action: any) => {
+  switch (action.type) {
+    case SET_MARKETS:
+      return { ...state, ...action.payload };
+    default:
+      return state;
+  }
+};
+
 const MarketSummary = () => {
-  const [data, setData] = useState<any>(null);
+  const [selectedMarket, setSelectedMarket] = useState<string>("US");
+  const [marketData, dispatch] = useReducer(marketReducer, {
+    usMarkets: null,
+    eurMarkets: null,
+    asiaMarkets: null,
+    canMarkets: null,
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchMarketData = async () => {
       try {
         const response = await fetch(url, options);
         const result = await response.json();
-        setData(result.MarketRegions.USA);
+
+        dispatch({
+          type: SET_MARKETS,
+          payload: {
+            usMarkets: result.MarketRegions.USA,
+            eurMarkets: result.MarketRegions.Europe,
+            asiaMarkets: result.MarketRegions.Asia,
+            canMarkets: result.MarketRegions.CAN,
+          },
+        });
       } catch (error) {
         console.error(error);
       }
     };
-    fetchData();
+
+    fetchMarketData();
   }, []);
 
+  const { usMarkets, canMarkets, eurMarkets, asiaMarkets } = marketData;
+
+  const selectedMarketData =
+    selectedMarket === "US"
+      ? usMarkets
+      : selectedMarket === "Europe"
+      ? eurMarkets
+      : selectedMarket === "Asia"
+      ? asiaMarkets
+      : canMarkets;
+
+  const handleSelectMarket = (market: string) => {
+    setSelectedMarket(market);
+  };
+
   return (
-    <Flex direction="column" gap="2" className="bg-white rounded-xl p-2">
-      <Text weight="bold">Markets</Text>
+    <Flex direction="column" gap="2" className="bg-white rounded-xl">
+      <Flex gap="2">
+        <Text weight="bold">Markets: </Text>
+        {markets.map((market: { key: string; title: string }) => {
+          return (
+            <Badge
+              key={market.key}
+              variant={selectedMarket === market.title ? "soft" : "outline"}
+              radius="full"
+              color={selectedMarket === market.title ? "blue" : "gray"}
+              onClick={() => handleSelectMarket(market.title)}
+            >
+              {market.title}
+            </Badge>
+          );
+        })}
+      </Flex>
       <Grid gap="3" columns="4">
-        {data &&
-          data.map((index: any) => {
-            const { PerformanceId, Name, Price, PriceChange, PercentChange } =
-              index;
-            return (
-              <Flex
-                key={PerformanceId}
-                direction="column"
-                justify="center"
-                align="center"
-                className="border rounded-xl p-2"
-              >
-                <Text size="2" weight="bold">{Name}</Text>
-                <Text size="1">
-                  $
-                  {Price.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </Text>
-                <Flex>
-                  <Text size="1" color={PriceChange > 0 ? "green" : "red"}>
-                    {PriceChange > 0 && "+"}
-                    {PriceChange.toFixed(2)}
-                  </Text>
-                  <Text size="1" color={PercentChange > 0 ? "green" : "red"}>
-                    ({PercentChange > 0 && "+"}
-                    {PercentChange.toFixed(2)}%)
-                  </Text>
-                </Flex>
-              </Flex>
-            );
-          })}
+        {selectedMarketData &&
+          selectedMarketData.map((index: any) => (
+            <MarketPreview
+              key={index.PerformanceId}
+              performanceId={index.PerformanceId}
+              priceChange={index.PriceChange}
+              name={index.Name}
+              price={index.Price}
+              percentChange={index.PercentChange}
+            />
+          ))}
       </Grid>
     </Flex>
   );

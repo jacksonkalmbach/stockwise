@@ -32,8 +32,8 @@ const marketTrends: { title: string; icon: ReactNode }[] = [
 const MarketPage = () => {
   const [selectedTrend, setSelectedTrend] = useState<string>("Active");
   return (
-    <div className="flex-grow flex-1 w-full h-full bg-[#f8f9fd] p-8 overflow-auto">
-      <Grid columns="3" gap="4">
+    <div className="flex-grow flex-1 w-screen h-full bg-[#f8f9fd] p-3 md:p-8 overflow-auto md:w-full">
+      <Grid columns="1" gap="4">
         <Flex
           direction="column"
           gap="4"
@@ -43,7 +43,7 @@ const MarketPage = () => {
           <Text size="4" weight="bold">
             Explore Market Trends
           </Text>
-          <Flex gap="3">
+          <Flex gap="3" className="overflow-auto">
             {marketTrends.map((trend: { title: string; icon: ReactNode }) => {
               return (
                 <div key={trend.title} className="cursor-pointer">
