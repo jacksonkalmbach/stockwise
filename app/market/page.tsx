@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Badge, Flex, Text } from "@radix-ui/themes";
 import MarketSummary from "./_components/MarketSummary.tsx/MarketSummary";
-import Movers from "./_components/Movers";
+import MarketTrends from "./_components/MarketTrends";
 import MarketNews from "./_components/MarketNews";
 
 const url =
@@ -109,7 +109,7 @@ const MarketPage = () => {
           <div className={`${showNews ? "" : "h-0"}`}>
             <MarketNews articles={articles} show={showNews} />
           </div>
-          <Movers />
+          <MarketTrends selectedTrend={selectedTrend}/>
         </Flex>
         <div className="hidden md:flex flex-col md:col-span-1 bg-white rounded-xl p-6">
           <MarketNews articles={articles} show />

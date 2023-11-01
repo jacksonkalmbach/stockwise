@@ -13,7 +13,7 @@ const options = {
   },
 };
 
-const Movers = () => {
+const MarketTrends = ({ selectedTrend }: { selectedTrend: string }) => {
   const router = useRouter();
   const [value, setValue] = useState<string>("Actives");
   const [gainers, setGainers] = useState<any>([]);
@@ -39,6 +39,13 @@ const Movers = () => {
     fetchData();
   }, []);
 
+  const selectedTrendData =
+    selectedTrend === "Most active"
+      ? actives
+      : selectedTrend === "Losers"
+      ? losers
+      : gainers;
+
   return (
     <Flex direction="column" className="w-full">
       <Table.Root className="overflow-auto">
@@ -52,8 +59,8 @@ const Movers = () => {
         </Table.Header>
 
         <Table.Body>
-          {gainers &&
-            gainers.map((stock: any) => {
+          {selectedTrendData &&
+            selectedTrendData.map((stock: any) => {
               const {
                 performanceID,
                 ticker,
@@ -103,4 +110,4 @@ const Movers = () => {
   );
 };
 
-export default Movers;
+export default MarketTrends;

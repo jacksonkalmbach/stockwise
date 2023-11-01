@@ -26,7 +26,6 @@ const MarketNews = ({ articles, show }: { articles: any; show?: boolean }) => {
               shorterHeadline,
               url,
               shortDateLastPublished,
-              AuthorName,
               promoImage,
             } = article;
             return (
